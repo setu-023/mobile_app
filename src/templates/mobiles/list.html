@@ -1,0 +1,52 @@
+{% extends 'mobiles/base.html' %}
+
+
+{% block content %}
+
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    
+</head>
+
+<div>
+    <ul class="nav nav-list">
+       <div class="container" id="search">
+        <form>
+            <li class="nav-header">Find Mobile</li>
+          <li><input class="form-control mr-sm-2" type="text" name="suggestion" value="" id="suggestion" /></li>
+       </form>
+    </div>
+    </ul>
+    </div>
+    <div id="search-results-data">
+       
+    </div>
+
+</div>
+
+<script>
+$(function(){
+
+$('#suggestion').keyup(function(){
+        // alert($('#suggestion').val())
+        $.ajax({
+        type:"GET",
+        url:"search",
+        data:{
+            'search_text': $('#suggestion').val(),
+            'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType: 'html'
+        });
+        });
+        });
+
+function searchSuccess(data, textStatus,jqXHR)
+{
+$('#search-results-data').html(data);
+}
+</script>
+
+{% endblock %}

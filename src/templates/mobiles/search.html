@@ -1,0 +1,42 @@
+
+
+
+<div>
+    <ul class="nav nav-list">
+       <li class="nav-header">Find Mobile</li>
+       <form>
+          <li><input class="search-query span10" type="text" name="suggestion" value=" " id="suggestion" /></li>
+       </form>
+    </ul>
+    </div>
+    <div id="search-results-data">
+    </div>
+
+</div>
+
+<script>
+$(function(){
+
+$('#suggestion').keyup(function(){
+        // alert($('#suggestion').val())
+        $.ajax({
+        type:"GET",
+        url:"search",
+        data:{
+            'search_text': $('#suggestion').val(),
+            'csrfmiddlewaretoken' : $("input[name=csrfmiddlewaretoken]").val()
+        },
+        success: searchSuccess,
+        dataType: 'html'
+        });
+        });
+        });
+
+function searchSuccess(data, textStatus,jqXHR)
+{
+$('#search-results-data').html(data);
+}
+</script>
+
+<a class="btn btn-outline-info btn-md" href="{% url 'mobile_list' %}">Back</a>
+
